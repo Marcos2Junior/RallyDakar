@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public string Nome { get; set; }
+        public string SobreNome { get; set; }
         public int EquipeId { get; set; }
         public virtual Equipe Equipe { get; set; }
 
