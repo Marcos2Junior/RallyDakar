@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using RallyDakar.API.Modelos;
 using RallyDakar.Dominio.Entidades;
 using RallyDakar.Dominio.Interfaces;
@@ -17,11 +18,13 @@ namespace RallyDakar.API.Controllers
     {
         private readonly IPilotoRepositorio _pilotoRepositorio;
         private readonly IMapper _mapper;
+        private readonly ILogger<PilotoController> _logger;
 
-        public PilotoController(IPilotoRepositorio pilotoRepositorio, IMapper mapper)
+        public PilotoController(IPilotoRepositorio pilotoRepositorio, IMapper mapper, ILogger<PilotoController> logger)
         {
             _pilotoRepositorio = pilotoRepositorio;
             _mapper = mapper;
+            _logger = logger;
         }
 
         //[HttpGet]
@@ -72,18 +75,29 @@ namespace RallyDakar.API.Controllers
         {
             try
             {
+                _logger.LogInformation("Mapeando piloto modelo.");
                 var piloto = _mapper.Map<Piloto>(pilotoModelo);
 
+                _logger.LogInformation($"Verificando se existe piloto com id informado {piloto.Id}");
                 if (_pilotoRepositorio.Existe(piloto.Id))
+                {
+                    _logger.LogWarning($"Ja existe piloto com a mesma identificacao {piloto.Id}");
                     return StatusCode(409, "Ja existe um piloto com a mesma identificacao.");
+                }
 
+                _logger.LogInformation($"Adicionando piloto Nome {piloto.Nome} Sobrenome {piloto.SobreNome}");
                 _pilotoRepositorio.Adicionar(piloto);
+                _logger.LogInformation("Operacao adicionar piloto ocorreu sem erros");
 
+                _logger.LogInformation("Mapeando o retorno");
                 var pilotoModeloRetorno = _mapper.Map<PilotoModelo>(piloto);
+
+                _logger.LogInformation("Chamando o metodo Obter");
                 return CreatedAtRoute("Obter", new { id = piloto.Id }, pilotoModeloRetorno);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.ToString());
                 return StatusCode(500, "Ocorreu um erro interno no sistema. Por favor entre em contato com suporte.");
             }
 
