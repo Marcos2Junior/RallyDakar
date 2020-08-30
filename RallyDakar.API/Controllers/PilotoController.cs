@@ -55,17 +55,24 @@ namespace RallyDakar.API.Controllers
         {
             try
             {
+                _logger.LogInformation($"Obtendo piloto {id}");
                 var piloto = _pilotoRepositorio.Obter(id);
 
                 if (piloto == null)
+                {
+                    _logger.LogWarning($"Nao foi localizado piloto {id}");
                     return NotFound();
+                }
 
+                _logger.LogInformation($"Mapeando piloto modelo");
                 var pilotoModelo = _mapper.Map<PilotoModelo>(piloto);
 
+                _logger.LogInformation("Operacao bem sucedida");
                 return Ok(pilotoModelo);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.ToString());
                 return StatusCode(500, "Ocorreu um erro interno no sistema. Por favor entre em contato com suporte.");
             }
         }
@@ -108,23 +115,34 @@ namespace RallyDakar.API.Controllers
         {
             try
             {
+                _logger.LogInformation($"Executando a atualizacao em patch do pilotoid {id}");
+                _logger.LogInformation($"Verificando se pilotoid {id} existe na base");
                 if (!_pilotoRepositorio.Existe(id))
+                {
+                    _logger.LogWarning($"Nenhum pilotoid {id} encontrado");
                     return NotFound();
+                }
 
+                _logger.LogInformation($"Obtendo instancia com EFCore {id}");
                 var piloto = _pilotoRepositorio.Obter(id);
 
+                _logger.LogInformation("Mapeando para o modelo");
                 var pilotoModelo = _mapper.Map<PilotoModelo>(piloto);
 
-
+                _logger.LogInformation("Aplicando o patch");
                 patchPilotoModelo.ApplyTo(pilotoModelo);
 
                 piloto = _mapper.Map(pilotoModelo, piloto);
+
+                _logger.LogInformation($"Atualizando o pilotoid {id}");
                 _pilotoRepositorio.Atualizar(piloto);
 
+                _logger.LogInformation("Finalizada a operacao");
                 return NoContent();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.ToString());
                 return StatusCode(500, "Ocorreu um erro interno no sistema. Por favor entre em contato com suporte.");
             }
         }
@@ -134,17 +152,26 @@ namespace RallyDakar.API.Controllers
         {
             try
             {
+                _logger.LogInformation($"Iniciando metodo atualizar PUT para pilotoid {pilotoModelo.Id}");
+                _logger.LogInformation("Verificando se piloto existe");
                 if (!_pilotoRepositorio.Existe(pilotoModelo.Id))
+                {
+                    _logger.LogWarning($"PilotoId {pilotoModelo.Id} nao encontrado");
                     return NotFound();
+                }
 
+                _logger.LogInformation("Mapeando para o modelo");
                 var piloto = _mapper.Map<Piloto>(pilotoModelo);
 
+                _logger.LogInformation($"Atualizando o pilotoId {piloto.Id}");
                 _pilotoRepositorio.Atualizar(piloto);
 
+                _logger.LogInformation("Operacao finlizada");
                 return NoContent();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.ToString());
                 return StatusCode(500, "Ocorreu um erro interno no sistema. Por favor entre em contato com suporte.");
             }
         }
@@ -154,17 +181,26 @@ namespace RallyDakar.API.Controllers
         {
             try
             {
+                _logger.LogInformation($"Iniciando opercao deletar pilotoId {id}");
+                _logger.LogInformation($"Verificando se pilotoid {id} existe");
                 var piloto = _pilotoRepositorio.Obter(id);
 
                 if (piloto == null)
+                {
+                    _logger.LogWarning($"Pilotoid {id} nao encontrado");
                     return NotFound();
+                }
 
+                _logger.LogInformation("Deletando pilotoId {id}");
                 _pilotoRepositorio.Deletar(piloto);
+
+                _logger.LogInformation("Operacao finalizada");
 
                 return NoContent();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.ToString());
                 return StatusCode(500, "Ocorreu um erro interno no sistema. Por favor entre em contato com suporte.");
             }
         }
