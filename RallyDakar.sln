@@ -9,6 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RallyDakar.Dominio", "Rally
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RallyDakar.Dominio.Testes", "RallyDakar.Dominio.Testes\RallyDakar.Dominio.Testes.csproj", "{77DDA256-4B06-4279-AF97-592C36D53EA5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - WEB", "1 - WEB", "{ED3DEC3F-C2F7-4856-8067-EEE76A128312}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.1 - API", "1.1 - API", "{F8B2DF77-4ACE-43BA-B15E-7408679E498A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RallyDakar.API", "RallyDakar.API\RallyDakar.API.csproj", "{E916AC56-9D55-441E-8F1D-6A0E17526656}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +29,10 @@ Global
 		{77DDA256-4B06-4279-AF97-592C36D53EA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77DDA256-4B06-4279-AF97-592C36D53EA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77DDA256-4B06-4279-AF97-592C36D53EA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E916AC56-9D55-441E-8F1D-6A0E17526656}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E916AC56-9D55-441E-8F1D-6A0E17526656}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E916AC56-9D55-441E-8F1D-6A0E17526656}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E916AC56-9D55-441E-8F1D-6A0E17526656}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,6 +40,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{4ACDABF9-861A-44F0-A314-0B98B7DC4CE8} = {4FC870DE-9DB1-42D3-9635-4021C7E3D2EC}
 		{77DDA256-4B06-4279-AF97-592C36D53EA5} = {4FC870DE-9DB1-42D3-9635-4021C7E3D2EC}
+		{F8B2DF77-4ACE-43BA-B15E-7408679E498A} = {ED3DEC3F-C2F7-4856-8067-EEE76A128312}
+		{E916AC56-9D55-441E-8F1D-6A0E17526656} = {F8B2DF77-4ACE-43BA-B15E-7408679E498A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {054F2DDA-E437-45B2-86C9-CDC6E4310AAB}
